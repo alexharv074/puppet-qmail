@@ -6,4 +6,7 @@ class qmail::params {
     $rcpthosts       = ['localhost', $::fqdn]
     $smtproutes      = []
   }
+  else {
+    fail("Class['qmail::params']: Unsupported operatingsystem: ${::operatingsystem}")
+  }
 }
