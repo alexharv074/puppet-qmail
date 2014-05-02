@@ -35,19 +35,16 @@ class qmail (
 
   file { '/etc/qmail/rcpthosts':
     ensure  => file,
-    content => inline_template('<%= @rcpthosts.join("\n") %>
-'),
+    content => inline_template('<%= @rcpthosts.join("\n") + "\n" %>'),
   }
 
   file { '/etc/qmail/smtproutes':
     ensure  => file,
-    content => inline_template('<%= @smtproutes.join("\n") %>
-'),
+    content => inline_template('<%= @smtproutes.join("\n") + "\n" %>'),
   }
 
   file { '/etc/qmail/locals':
     ensure  => file,
-    content => inline_template('<%= @locals.join("\n") %>
-'),
+    content => inline_template('<%= @locals.join("\n") + "\n" %>'),
   }
 }
