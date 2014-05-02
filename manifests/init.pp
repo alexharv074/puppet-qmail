@@ -8,6 +8,10 @@ class qmail (
 
 ) inherits ::qmail::params {
 
+  # N.B. Qmail package on Ubuntu adds qmail users in
+  # the post install script.  Ubuntu is the only platform
+  # currently supported.
+
   package { 'qmail':
     ensure => installed,
   }
