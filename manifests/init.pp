@@ -38,26 +38,21 @@ class qmail (
   create_resources(file, {
     '/etc/qmail/defaultdelivery' => {
       content => "$defaultdelivery\n",
-    },
-    '/etc/qmail/me' => {
+    }, '/etc/qmail/me' => {
       content => "$me\n",
-    },
-    '/etc/qmail/rcpthosts' => {
+    }, '/etc/qmail/rcpthosts' => {
       content => inline_template('<%= @rcpthosts.join("\n") + "\n" %>'),
-    },
-    '/etc/qmail/smtproutes' => {
+    }, '/etc/qmail/smtproutes' => {
       content => inline_template('<%= @smtproutes.join("\n") + "\n" %>')
-    },
-    '/etc/qmail/locals' => {
+    }, '/etc/qmail/locals' => {
       content => inline_template('<%= @locals.join("\n") + "\n" %>')
-    },
-    '/etc/qmail/tcp.smtp' => {
+    }, '/etc/qmail/tcp.smtp' => {
       content => inline_template('<%= @tcp_smtp.join("\n") + "\n" %>')
     },
   })
 
   exec { '/usr/bin/qmailctl cdb':
-    subscribe   => File['/etc/qmail/tcp.smtp'],
     refreshonly => true,
+    subscribe   => File['/etc/qmail/tcp.smtp'],
   }
 }
