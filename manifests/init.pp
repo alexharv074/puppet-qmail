@@ -37,18 +37,17 @@ class qmail (
 
   create_resources(file, {
     '/etc/qmail/defaultdelivery' => {
-      content => "$defaultdelivery\n",
-    }, '/etc/qmail/me' => {
-      content => "$me\n",
-    }, '/etc/qmail/rcpthosts' => {
-      content => inline_template('<%= @rcpthosts.join("\n") + "\n" %>'),
-    }, '/etc/qmail/smtproutes' => {
-      content => inline_template('<%= @smtproutes.join("\n") + "\n" %>')
-    }, '/etc/qmail/locals' => {
-      content => inline_template('<%= @locals.join("\n") + "\n" %>')
-    }, '/etc/qmail/tcp.smtp' => {
-      content => inline_template('<%= @tcp_smtp.join("\n") + "\n" %>')
-    },
+      content => "$defaultdelivery\n"},
+    '/etc/qmail/me' => {
+      content => "$me\n"},
+    '/etc/qmail/rcpthosts' => {
+      content => inline_template('<%= @rcpthosts.join("\n") + "\n" %>')},
+    '/etc/qmail/smtproutes' => {
+      content => inline_template('<%= @smtproutes.join("\n") + "\n" %>')},
+    '/etc/qmail/locals' => {
+      content => inline_template('<%= @locals.join("\n") + "\n" %>')},
+    '/etc/qmail/tcp.smtp' => {
+      content => inline_template('<%= @tcp_smtp.join("\n") + "\n" %>')},
   })
 
   exec { '/usr/bin/qmailctl cdb':
