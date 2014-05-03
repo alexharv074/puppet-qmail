@@ -22,50 +22,34 @@ class qmail (
     ensure => installed,
   }
 
-  $defaultdelivery_content = "$defaultdelivery\n"
-  $me_content              = "$me\n"
-
-  $rcpthosts_content  = inline_template('<%= @rcpthosts.join("\n")  + "\n" %>')
-  $smtproutes_content = inline_template('<%= @smtproutes.join("\n") + "\n" %>')
-  $locals_content     = inline_template('<%= @locals.join("\n")     + "\n" %>')
-  $tcp_smtp_content   = inline_template('<%= @tcp_smtp.join("\n")   + "\n" %>')
-
   File {
+    ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     require => Package['qmail'],
   }
 
-  file { '/etc/qmail/defaultdelivery':
-    ensure  => file,
-    content => $defaultdelivery_content,
-  }
-
-  file { '/etc/qmail/me':
-    ensure  => file,
-    content => $me_content,
-  }
-
-  file { '/etc/qmail/rcpthosts':
-    ensure  => file,
-    content => $rcpthosts_content,
-  }
-
-  file { '/etc/qmail/smtproutes':
-    ensure  => file,
-    content => $smtproutes_content,
-  }
-
-  file { '/etc/qmail/locals':
-    ensure  => file,
-    content => $locals_content,
-  }
-
-  file { '/etc/qmail/tcp.smtp':
-    ensure  => file,
-    content => $tcp_smtp_content,
-  }
+  create_resources(file, {
+    '/etc/qmail/defaultdelivery' => {
+      content => "$defaultdelivery\n",
+    },
+    '/etc/qmail/me' => {
+      content => "$me\n",
+    },
+    '/etc/qmail/rcpthosts' => {
+      content => inline_template('<%= @rcpthosts.join("\n") + "\n" %>'),
+    },
+    '/etc/qmail/smtproutes' => {
+      content => inline_template('<%= @smtproutes.join("\n") + "\n" %>')
+    },
+    '/etc/qmail/locals' => {
+      content => inline_template('<%= @locals.join("\n") + "\n" %>')
+    },
+    '/etc/qmail/tcp.smtp' => {
+      content => inline_template('<%= @tcp_smtp.join("\n") + "\n" %>')
+    },
+  })
 
   exec { '/usr/bin/qmailctl cdb':
     subscribe   => File['/etc/qmail/tcp.smtp'],
