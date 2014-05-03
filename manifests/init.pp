@@ -9,6 +9,8 @@ class qmail (
 
 ) inherits ::qmail::params {
 
+  validate_string($defaultdelivery)
+  validate_string($me)
   validate_array($rcpthosts)
   validate_array($smtproutes)
   validate_array($locals)
@@ -17,6 +19,9 @@ class qmail (
   # N.B. Qmail package on Ubuntu adds qmail users in
   # the post install script.  Ubuntu is the only platform
   # currently supported.
+
+  # Redhat platforms don't appear to provide packages
+  # for Qmail thus Ubuntu the only platform we're supporting.
 
   package { 'qmail':
     ensure => installed,
