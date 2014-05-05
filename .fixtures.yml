@@ -1,5 +1,4 @@
 fixtures:
   symlinks:
     qmail: "#{source_dir}"
-  repositories:
-    stdlib: /etc/puppet/modules/stdlib
+    stdlib: "#{source_dir}/../stdlib"
